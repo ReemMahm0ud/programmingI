@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+void CopyFile(char src[20],char des[20])
+{ FILE *f1;
+  printf("\nenter the source file :\n");
+  gets(src);
+  f1=fopen(src,"r");
+  if(f1=='\0')
+  {printf(" no thing is found");}
+   FILE *f2;
+   printf("\nenter the destination file:\n");
+   gets(des);
+   f2=fopen(des,"w");
+   if(f2=='\0')
+   {printf("file not found");}
+   char ch;
+   while((ch=getc(f1))!=EOF)
+   {
+       putc(ch,f2);
+       }
+   printf("DID ??");
+fclose(f1);
+fclose(f2);
+}
+int main()
+{
+    char src[20],des[20];
+    CopyFile(src,des);
+    return 0;
+}

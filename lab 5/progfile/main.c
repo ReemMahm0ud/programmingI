@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <stdlib.h>
+float maximum=0,minimum=0,average=0;
+struct student
+{
+    int ID;
+    char name[30];
+    float GPA;
+    char grade;
+} S[100];
+int maincount=-1;
+void Load()
+{
+    FILE *fptr;
+    int i=0;
+    fptr = fopen("lab5.txt","r");
+    while(!feof(fptr))
+    {
+        fscanf(fptr,"%d,%65[^,],%f",&S[i].ID,S[i].name,&S[i].GPA);
+        i++;
+        maincount++;
+    }
+    fclose(fptr);
+}
+void Grading()
+{
+    int i;
+    for(i=0; i<=maincount; i++)
+    {
+        if(S[i].GPA>=3.5&&S[i].GPA<=4)
+        {
+            S[i].grade='A';
+        }
+        if(S[i].GPA>=3&&S[i].GPA<3.5)
+        {
+            S[i].grade='B';
+        }
+        if(S[i].GPA>=2.5&&S[i].GPA<3)
+        {
+            S[i].grade='C';
+        }
+        if(S[i].GPA>=2&&S[i].GPA<2.5)
+        {
+            S[i].grade='D';
+        }
+        if(S[i].GPA>=3.5&&S[i].GPA<2)
+        {
+            S[i].grade='F';
+        }
+    }
+}
+void MaxMin()
+{
+    float max=0,min,avg=0,sum=0;
+    int i;
+    min=S[0].GPA;
+    for(i=0; i<=maincount; i++)
+    {
+        if(S[i].GPA>max)
+        {
+            max=S[i].GPA;
+        }
+        if(S[i].GPA<min)
+        {
+            min=S[i].GPA;
+        }
+        sum+=S[i].GPA;
+    }
+    maincount*=1.0;
+    avg=sum/(maincount+1);
+    maximum=max;
+    minimum=min;
+    average=avg;
+}
+int main()
+{
+    int i=0;
+    Load();
+    Grading();
+    MaxMin();
+    printf("Student ID\tStudent name\tGPA\t\t\tGrade\n");
+    for(i=0; i<=maincount; i++)
+    {
+        printf("%d\t\t%s\t\t%f\t\t%c\n",S[i].ID,S[i].name,S[i].GPA,S[i].grade);
+    }
+    printf("Max GPA is %f\n",maximum);
+    printf("Min GPA is %f\n",minimum);
+    printf("Average GPA is %f",average);
+    return 0;
+}
